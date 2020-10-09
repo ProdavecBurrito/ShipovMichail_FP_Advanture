@@ -17,7 +17,7 @@ namespace Shipov_FP_Adventure
 
         private void Update()
         {
-            if (_inputManager.CheckThatUse() && _startDialogue.IsUsePanelActive)
+            if (_inputManager.PressedUse() && _startDialogue.IsUsePanelActive)
             {
                 _dialogue.StartDialogue();
             }

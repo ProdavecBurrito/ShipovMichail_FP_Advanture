@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 
 namespace Shipov_FP_Adventure
@@ -28,6 +29,15 @@ namespace Shipov_FP_Adventure
             CheckJumpAnimation();
             SetMovementAnimation();
             CheckThatStrafe();
+            CheckThatDrawWeapon();
+        }
+
+        private void CheckThatDrawWeapon()
+        {
+            if (_inputManager.PressedDrawWeapon())
+            {
+                _animator.SetTrigger("DrawWeapon");
+            }
         }
         #endregion
 
@@ -36,7 +46,7 @@ namespace Shipov_FP_Adventure
 
         private void SetMovementAnimation()
         {
-            if (_inputManager.CheckThatPressedRunButton())
+            if (_inputManager.PressedRunButton())
             {
                 _animator.SetBool("IsRun", true);
             }

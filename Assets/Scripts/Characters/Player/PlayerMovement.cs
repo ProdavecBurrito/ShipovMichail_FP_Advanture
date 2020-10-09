@@ -59,7 +59,7 @@ namespace Shipov_FP_Adventure
             {
                 _inputManager.Movement.Normalize();
 
-                if (_inputManager.CheckThatPressedRunButton())
+                if (_inputManager.PressedRunButton())
                 {
                     IsRun = true;
                     _localMovement = (transform.right * _inputManager.Movement.x + transform.forward * _inputManager.Movement.z) * _speed * RUN_MULTIPLIER;
@@ -83,7 +83,7 @@ namespace Shipov_FP_Adventure
 
         private void CheckJump()
         {
-            if (_inputManager.CheckThatJump() && _groundChecker.IsGrounded)
+            if (_inputManager.PressedThatJump() && _groundChecker.IsGrounded)
             {
                 _rigidbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
                 IsJump = true;

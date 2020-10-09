@@ -32,27 +32,27 @@ namespace Shipov_FP_Adventure
 
         #region Methods
 
-        public bool CheckThatAttack()
+        public bool PressedAttack()
         {
             return Input.GetKeyDown(Attack);
         }
 
-        public bool CheckThatDrawWeapon()
+        public bool PressedDrawWeapon()
         {
             return Input.GetKeyDown(DrawWeapon);
         }
 
-        public bool CheckThatJump()
+        public bool PressedThatJump()
         {
             return Input.GetKeyDown(Jump);
         }
 
-        public bool CheckThatPressedRunButton()
+        public bool PressedRunButton()
         {
             return Input.GetKey(Run);
         }
 
-        public bool CheckThatUse()
+        public bool PressedUse()
         {
             return Input.GetKeyDown(Use);
         }

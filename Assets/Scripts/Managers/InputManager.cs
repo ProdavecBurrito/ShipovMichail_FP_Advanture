@@ -11,6 +11,7 @@ namespace Shipov_FP_Adventure
         public KeyCode Run = KeyCode.LeftShift;
         public KeyCode Use = KeyCode.E;
         public KeyCode Attack = KeyCode.Mouse0;
+        public KeyCode DrawWeapon = KeyCode.F;
         public Vector3 Movement;
         public float RotationX;
         public float RotationY;
@@ -30,6 +31,16 @@ namespace Shipov_FP_Adventure
 
 
         #region Methods
+
+        public bool CheckThatAttack()
+        {
+            return Input.GetKeyDown(Attack);
+        }
+
+        public bool CheckThatDrawWeapon()
+        {
+            return Input.GetKeyDown(DrawWeapon);
+        }
 
         public bool CheckThatJump()
         {

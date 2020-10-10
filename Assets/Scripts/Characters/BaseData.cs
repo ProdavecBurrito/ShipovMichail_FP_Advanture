@@ -7,9 +7,21 @@ namespace Shipov_FP_Adventure
     {
         public CharacterData CharacterData;
 
+        private void Start()
+        {
+            CharacterData.Health = CharacterData.MaxHealth;
+        }
+
         public void GetDamage(int damage)
         {
-            CharacterData.Health -= damage;
+            if (CharacterData.Health != 0)
+            {
+                CharacterData.Health -= damage;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
         public void RestoreHealth()

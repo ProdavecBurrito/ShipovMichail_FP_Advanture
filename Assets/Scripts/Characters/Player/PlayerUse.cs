@@ -44,7 +44,7 @@ namespace Shipov_FP_Adventure
                     }
                 }
 
-                if (_dialogue.IsTalking)
+                if (_dialogue!= null && _dialogue.IsTalking)
                 {
                     _startDialogue.HideUseButton();
                 }

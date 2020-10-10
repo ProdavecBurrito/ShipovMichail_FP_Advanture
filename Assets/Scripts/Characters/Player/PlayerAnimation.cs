@@ -7,10 +7,13 @@ namespace Shipov_FP_Adventure
     public sealed class PlayerAnimation : MonoBehaviour
     {
         #region Fields
-        
+
         private Animator _animator;
         private PlayerMovement _playerMovement;
         private InputManager _inputManager;
+        private PlayerWeaponManager _playerManager;
+        private bool _isAttack;
+        private bool _isSecondAttack;
 
         #endregion
 
@@ -19,6 +22,8 @@ namespace Shipov_FP_Adventure
 
         private void Start()
         {
+            _playerManager = GetComponent<PlayerWeaponManager>();
+            _isAttack = false;
             _animator = GetComponent<Animator>();
             _playerMovement = GetComponent<PlayerMovement>();
             _inputManager = GetComponent<InputManager>();
@@ -30,15 +35,9 @@ namespace Shipov_FP_Adventure
             SetMovementAnimation();
             CheckThatStrafe();
             CheckThatDrawWeapon();
+            CheckThatAttack();
         }
 
-        private void CheckThatDrawWeapon()
-        {
-            if (_inputManager.PressedDrawWeapon())
-            {
-                _animator.SetTrigger("DrawWeapon");
-            }
-        }
         #endregion
 
 
@@ -88,6 +87,41 @@ namespace Shipov_FP_Adventure
             else
             {
                 _animator.SetBool("IsStrafe", false);
+            }
+        }
+
+        private void CheckThatDrawWeapon()
+        {
+            if (_inputManager.PressedDrawWeapon() && _playerManager.IsArmed)
+            {
+                _animator.SetTrigger("DrawOffWeapon");
+            }
+            else if (_inputManager.PressedDrawWeapon() && !_playerManager.IsArmed)
+            {
+                _animator.SetTrigger("DrawWeapon");
+            }
+        }
+
+        private void CheckThatAttack()
+        {
+            if (_playerManager.IsArmed)
+            {
+                if (_inputManager.PressedAttack() && !_isAttack && !_isSecondAttack)
+                {
+                    _animator.SetTrigger("Attack");
+                    _isAttack = true;
+                }
+                else if (_inputManager.PressedAttack() && _isAttack && !_isSecondAttack)
+                {
+                    _animator.SetTrigger("SecondAttack");
+                    _isAttack = false;
+                    _isSecondAttack = true;
+                }
+                else if (_inputManager.PressedAttack() && !_isAttack && _isSecondAttack)
+                {
+                    _animator.SetTrigger("ThirdAttack");
+                    _isSecondAttack = false;
+                }
             }
         }
 

@@ -17,8 +17,8 @@ namespace Shipov_FP_Adventure
         private PlayerMovement _playerMovement;
         
 
-        private bool _isAlreadySpoke;
-        private bool _isTalking;
+       [SerializeField] private bool _isAlreadySpoke;
+       [SerializeField] private bool _isTalking;
 
         public bool IsAlreadySpoke => _isAlreadySpoke;
         public bool IsTalking => _isTalking;
@@ -79,6 +79,7 @@ namespace Shipov_FP_Adventure
                     _mouseLook.enabled = true;
                     _isAlreadySpoke = true;
                     TextPanel.gameObject.SetActive(false);
+                    _isTalking = false;
                 }
                 else
                 {

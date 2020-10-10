@@ -9,7 +9,7 @@ namespace Shipov_FP_Adventure
 
         private Dialogue _dialogue;
 
-        private bool _isUsePanelActive;
+        [SerializeField] private bool _isUsePanelActive;
 
         public bool IsUsePanelActive => _isUsePanelActive;
 

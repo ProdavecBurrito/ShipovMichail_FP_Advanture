@@ -5,36 +5,62 @@ namespace Shipov_FP_Adventure
 {
     public class PlayerUse : MonoBehaviour
     {
+        [SerializeField] Camera _mainCam;
+        [SerializeField] private bool _isOnTarget;
+        [SerializeField] private LayerMask _layerMask;
+
         private StartDialogue _startDialogue;
         private InputManager _inputManager;
         private Dialogue _dialogue;
+        private RaycastHit _hit;
 
         private void Start()
         {
+            _mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
             _inputManager = GetComponent<InputManager>();
             _startDialogue = GetComponent<StartDialogue>();
         }
 
         private void Update()
         {
-            if (_inputManager.PressedUse() && _startDialogue.IsUsePanelActive)
-            {
-                _dialogue.StartDialogue();
-            }
+            FindUsableTargets();
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void FindUsableTargets()
         {
-            if (other.tag.Equals("Usable"))
+            if (Physics.Raycast(_mainCam.transform.position, _mainCam.transform.forward, out _hit, 2f, _layerMask))
             {
-                _dialogue = other.GetComponent<Dialogue>();
-                _startDialogue.ShowUseButton();
-            }
-        }
+                if (_dialogue == null)
+                {
+                    _dialogue = _hit.collider.gameObject.GetComponent<Dialogue>();
+                }
 
-        private void OnTriggerExit(Collider other)
-        {
-            _startDialogue.HideUseButton();
+                if (_dialogue != null && !_startDialogue.IsUsePanelActive && !_dialogue.IsTalking)
+                {
+                    _startDialogue.ShowUseButton();
+                    if (_inputManager.PressedUse())
+                    {
+                        _dialogue.StartDialogue();
+                    }
+                }
+
+                if (_dialogue.IsTalking)
+                {
+                    _startDialogue.HideUseButton();
+                }
+            }
+            else
+            {
+                if (_startDialogue.IsUsePanelActive)
+                {
+                    _startDialogue.HideUseButton();
+                }
+                if (_dialogue != null)
+                {
+                    _dialogue = null;
+                }
+            }
+
         }
     }
 }

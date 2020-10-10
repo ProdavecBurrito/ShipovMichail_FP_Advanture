@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: a079c1c6602c1654db25f54698ba7756
+guid: b0bb72d7cffd0654aa7365428e8fe458
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Draw Sword 2
+    second: DrawOff 1
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,7 +35,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Draw Sword 2
+      name: DrawOff 1
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0

@@ -14,11 +14,9 @@ namespace Shipov_FP_Adventure
 
         public void GetDamage(int damage)
         {
-            if (CharacterData.Health != 0)
-            {
-                CharacterData.Health -= damage;
-            }
-            else
+            CharacterData.Health -= damage;
+
+            if (CharacterData.Health <= 0)
             {
                 Destroy(gameObject);
             }

@@ -5,7 +5,7 @@ namespace Shipov_FP_Adventure
 {
     public sealed class PlayerHealthUI : MonoBehaviour
     {
-        [SerializeField] private CharacterData _playerHealth;
+        [SerializeField] private CharacterData _charHealth;
 
         [SerializeField] private float _stepWight;
         [SerializeField] private float _stepHight;
@@ -23,7 +23,7 @@ namespace Shipov_FP_Adventure
 
         private void OnGUI()
         {
-            GUI.Box(new Rect(Screen.width - Screen.width + _stepWight, Screen.height - _stepHight, _rectWigth, _rectHight), _playerHealth.Health.ToString(), _style);
+            GUI.Box(new Rect(Screen.width - Screen.width + _stepWight, Screen.height - _stepHight, _rectWigth, _rectHight), _charHealth.Health.ToString(), _style);
         }
     }
 }

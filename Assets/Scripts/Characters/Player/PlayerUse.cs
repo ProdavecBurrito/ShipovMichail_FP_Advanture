@@ -6,7 +6,6 @@ namespace Shipov_FP_Adventure
     public class PlayerUse : MonoBehaviour
     {
         [SerializeField] Camera _mainCam;
-        [SerializeField] private bool _isOnTarget;
         [SerializeField] private LayerMask _layerMask;
 
         private StartDialogue _startDialogue;
@@ -44,7 +43,7 @@ namespace Shipov_FP_Adventure
                     }
                 }
 
-                if (_dialogue.IsTalking)
+                if (_dialogue!= null && _dialogue.IsTalking)
                 {
                     _startDialogue.HideUseButton();
                 }

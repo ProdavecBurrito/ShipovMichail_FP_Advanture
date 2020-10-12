@@ -1,18 +1,44 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Sword : MonoBehaviour
+
+namespace Shipov_FP_Adventure
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Sword : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private GameObject _weapon;
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip[] _attackClips;
+        [SerializeField] private AudioClip _drawSound;
+        [SerializeField] private AudioClip _drawOffSound;
+        private int _sound;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void SwordAttack()
+        {
+            _weapon.SetActive(true);
+            _audioSource.clip = _attackClips[GetRandomSound()];
+            _audioSource.Play();
+        }
+
+        public void StopSwordAttack()
+        {
+            _weapon.SetActive(false);
+        }
+
+        private int GetRandomSound()
+        {
+            return _sound = Random.Range(0, _attackClips.Length);
+        }
+
+        public void PlayDrawSound()
+        {
+            _audioSource.clip = _drawSound;
+            _audioSource.Play();
+        }
+
+        public void PlayOffDrawSound()
+        {
+            _audioSource.clip = _drawOffSound;
+            _audioSource.Play();
+        }
     }
 }

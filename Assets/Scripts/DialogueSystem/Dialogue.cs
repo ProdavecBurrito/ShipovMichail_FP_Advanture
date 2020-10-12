@@ -15,10 +15,11 @@ namespace Shipov_FP_Adventure
 
         private MouseLook _mouseLook;
         private PlayerMovement _playerMovement;
+        private PlayerAnimation _playerAnimator;
         
 
-       [SerializeField] private bool _isAlreadySpoke;
-       [SerializeField] private bool _isTalking;
+        [SerializeField] private bool _isAlreadySpoke;
+        [SerializeField] private bool _isTalking;
 
         public bool IsAlreadySpoke => _isAlreadySpoke;
         public bool IsTalking => _isTalking;
@@ -35,6 +36,7 @@ namespace Shipov_FP_Adventure
 
         private void Start()
         {
+            _playerAnimator = FindObjectOfType<PlayerAnimation>();
             _playerMovement = FindObjectOfType<PlayerMovement>();
             _mouseLook = FindObjectOfType<MouseLook>();
             _isAlreadySpoke = false;
@@ -45,6 +47,7 @@ namespace Shipov_FP_Adventure
         {
             _mouseLook.UnlockCursor();
             _mouseLook.enabled = false;
+            _playerAnimator.enabled = false;
             _playerMovement.enabled = false;
             UsePanel.gameObject.SetActive(false);
             _isTalking = true;
@@ -77,6 +80,7 @@ namespace Shipov_FP_Adventure
                     _playerMovement.enabled = true;
                     _mouseLook.LockCursor();
                     _mouseLook.enabled = true;
+                    _playerAnimator.enabled = true;
                     _isAlreadySpoke = true;
                     TextPanel.gameObject.SetActive(false);
                     _isTalking = false;
@@ -90,6 +94,7 @@ namespace Shipov_FP_Adventure
             else
             {
                 _playerMovement.enabled = true;
+                _playerAnimator.enabled = true;
                 _mouseLook.LockCursor();
                 _mouseLook.enabled = true;
                 _isTalking = false;

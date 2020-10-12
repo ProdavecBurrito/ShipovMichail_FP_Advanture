@@ -8,12 +8,19 @@ namespace Shipov_FP_Adventure
     {
         #region Fields
 
+        [SerializeField] private Sword _sword;
+
         private Animator _animator;
         private PlayerMovement _playerMovement;
         private InputManager _inputManager;
         private PlayerWeaponManager _playerManager;
         private bool _isAttack;
         private bool _isSecondAttack;
+        private bool _isThirdAttack;
+
+        public bool IsAttack => _isAttack;
+        public bool IsSecondAttack => _isSecondAttack;
+        public bool IsThirdAttack => _isThirdAttack;
 
         #endregion
 
@@ -64,6 +71,7 @@ namespace Shipov_FP_Adventure
             {
                 _animator.SetBool("IsWalk", false);
             }
+            _isThirdAttack = false;
         }
 
         private void CheckJumpAnimation()
@@ -95,10 +103,12 @@ namespace Shipov_FP_Adventure
             if (_inputManager.PressedDrawWeapon() && _playerManager.IsArmed)
             {
                 _animator.SetTrigger("DrawOffWeapon");
+                _sword.PlayOffDrawSound();
             }
             else if (_inputManager.PressedDrawWeapon() && !_playerManager.IsArmed)
             {
                 _animator.SetTrigger("DrawWeapon");
+                _sword.PlayDrawSound();
             }
         }
 
@@ -120,8 +130,16 @@ namespace Shipov_FP_Adventure
                 else if (_inputManager.PressedAttack() && !_isAttack && _isSecondAttack)
                 {
                     _animator.SetTrigger("ThirdAttack");
+                    _isThirdAttack = true;
                     _isSecondAttack = false;
                 }
+                else if (_inputManager.PressedAttack() && !_isAttack && !_isSecondAttack && _isThirdAttack)
+                {
+                    _isThirdAttack = false;
+                    _animator.SetTrigger("Attack");
+                    _isAttack = true;
+                }
+                
             }
         }
 

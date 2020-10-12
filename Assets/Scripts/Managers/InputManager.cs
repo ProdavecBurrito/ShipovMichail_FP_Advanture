@@ -12,6 +12,7 @@ namespace Shipov_FP_Adventure
         public KeyCode Use = KeyCode.E;
         public KeyCode Attack = KeyCode.Mouse0;
         public KeyCode DrawWeapon = KeyCode.F;
+        public KeyCode Menu = KeyCode.Escape;
         public Vector3 Movement;
         public float RotationX;
         public float RotationY;
@@ -35,6 +36,11 @@ namespace Shipov_FP_Adventure
         public bool PressedAttack()
         {
             return Input.GetKeyDown(Attack);
+        }
+
+        public bool PressedMenu()
+        {
+            return Input.GetKeyDown(Menu);
         }
 
         public bool PressedDrawWeapon()

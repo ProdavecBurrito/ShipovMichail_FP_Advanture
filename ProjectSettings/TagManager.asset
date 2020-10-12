@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Usable
   - Enemy
+  - PlayerStaminaImage
+  - PlayerHealthImage
   layers:
   - Default
   - TransparentFX

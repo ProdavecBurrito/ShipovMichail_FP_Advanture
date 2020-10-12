@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 
 namespace Shipov_FP_Adventure
@@ -6,10 +7,10 @@ namespace Shipov_FP_Adventure
     [RequireComponent(typeof(CheckRangeToTarget))]
     public class TurnOffGameObject : MonoBehaviour
     {
-        [SerializeField] private GameObject[] _objs;
-        private Transform _player;
+        [SerializeField] private List<GameObject> _objs;
+        [SerializeField] private float range = 60f;
 
-        private float range = 60f;
+        private Transform _player;
         private CheckRangeToTarget _checkRange;
 
         private void Start()
@@ -20,15 +21,22 @@ namespace Shipov_FP_Adventure
 
         private void Update()
         {
-            for (int i = 0; i < _objs.Length; i++)
+            for (int i = 0; i < _objs.Count; i++)
             {
-                if (((_player.position - _objs[i].transform.position).sqrMagnitude > range * range))
+                if (_objs[i] == null)
                 {
-                    _objs[i].SetActive(false);
+                    _objs.Remove(_objs[i]);
                 }
                 else
                 {
-                    _objs[i].SetActive(true);
+                    if (((_player.position - _objs[i].transform.position).sqrMagnitude > range * range))
+                    {
+                        _objs[i].SetActive(false);
+                    }
+                    else
+                    {
+                        _objs[i].SetActive(true);
+                    }
                 }
             }
         }

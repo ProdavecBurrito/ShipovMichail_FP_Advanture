@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6731a875c18a8034b83f65b73b532a76, type: 3}
-  m_Name: Knight
+  m_Name: Guardian
   m_EditorClassIdentifier: 
-  Name: "\u0420\u044B\u0446\u0430\u0440\u044C"
+  Name: "\u0421\u0442\u0440\u0430\u0436\u043D\u0438\u043A"
   Stamina: 100
   Health: 100
   MaxHealth: 100

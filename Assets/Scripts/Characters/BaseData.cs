@@ -8,6 +8,7 @@ namespace Shipov_FP_Adventure
         public CharacterData CharacterData;
         public ChangeUIValue HealthValue;
         public ChangeUIValue StaminaValue;
+        public bool IsStaminaChange;
 
         private void Start()
         {
@@ -34,12 +35,14 @@ namespace Shipov_FP_Adventure
         public void RestoreMaxStamina()
         {
             CharacterData.Stamina = CharacterData.MaxStamina;
+            IsStaminaChange = false;
         }
 
         public void ReduceStamina(int number)
         {
             CharacterData.Stamina -= number;
             StaminaValue.ChangeValueUI(number);
+            IsStaminaChange = true;
         }
 
         public void RestoreStamina()
@@ -51,6 +54,11 @@ namespace Shipov_FP_Adventure
         public bool IsMaxStamina()
         {
             return CharacterData.Stamina >= CharacterData.MaxStamina;
+        }
+
+        public float GetStamina()
+        {
+            return CharacterData.Stamina;
         }
     }
 }

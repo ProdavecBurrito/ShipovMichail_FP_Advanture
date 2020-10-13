@@ -8,8 +8,8 @@ namespace Shipov_FP_Adventure
     {
         public CharacterData _character;
 
-        public Text NameText;
-        public Text CurrentSentence;
+        public Text CharacterNameText;
+        public Text UICurrentSentence;
         public RectTransform TextPanel;
         public RectTransform UsePanel;
 
@@ -52,7 +52,7 @@ namespace Shipov_FP_Adventure
             UsePanel.gameObject.SetActive(false);
             _isTalking = true;
             _currentSentenceNumber = 0;
-            NameText.text = _name;
+            CharacterNameText.text = _name;
             if (!TextPanel.gameObject.activeSelf)
             {
                 TextPanel.gameObject.SetActive(true);
@@ -67,38 +67,41 @@ namespace Shipov_FP_Adventure
                 _currentSentence = _alreadySpokeSentance;
             }
 
-            CurrentSentence.text = _currentSentence;
+            UICurrentSentence.text = _currentSentence;
         }
 
         public void NextSentence()
         {
-            if (!_isAlreadySpoke)
+            if (_isTalking)
             {
-                _currentSentenceNumber += 1;
-                if (_currentSentenceNumber >= _sentences.Length)
+                if (!_isAlreadySpoke)
                 {
-                    _playerMovement.enabled = true;
-                    _mouseLook.LockCursor();
-                    _mouseLook.enabled = true;
-                    _playerAnimator.enabled = true;
-                    _isAlreadySpoke = true;
-                    TextPanel.gameObject.SetActive(false);
-                    _isTalking = false;
+                    _currentSentenceNumber += 1;
+                    if (_currentSentenceNumber >= _sentences.Length)
+                    {
+                        _playerMovement.enabled = true;
+                        _mouseLook.LockCursor();
+                        _mouseLook.enabled = true;
+                        _playerAnimator.enabled = true;
+                        _isAlreadySpoke = true;
+                        TextPanel.gameObject.SetActive(false);
+                        _isTalking = false;
+                    }
+                    else
+                    {
+                        _currentSentence = _sentences[_currentSentenceNumber];
+                        UICurrentSentence.text = _currentSentence;
+                    }
                 }
                 else
                 {
-                    _currentSentence = _sentences[_currentSentenceNumber];
-                    CurrentSentence.text = _currentSentence;
+                    _playerMovement.enabled = true;
+                    _playerAnimator.enabled = true;
+                    _mouseLook.LockCursor();
+                    _mouseLook.enabled = true;
+                    _isTalking = false;
+                    TextPanel.gameObject.SetActive(false);
                 }
-            }
-            else
-            {
-                _playerMovement.enabled = true;
-                _playerAnimator.enabled = true;
-                _mouseLook.LockCursor();
-                _mouseLook.enabled = true;
-                _isTalking = false;
-                TextPanel.gameObject.SetActive(false);
             }
         }
     }

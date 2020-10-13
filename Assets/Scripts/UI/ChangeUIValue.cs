@@ -11,7 +11,6 @@ namespace Shipov_FP_Adventure
         public void ChangeValueUI(float value)
         {
             _image.fillAmount = _image.fillAmount - (value / 100);
-            Debug.Log(_image.fillAmount);
         }
     }
 }

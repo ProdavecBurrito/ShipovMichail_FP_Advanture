@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - PlayerStaminaImage
   - PlayerHealthImage
+  - WayPoint
+  - Village
   layers:
   - Default
   - TransparentFX
@@ -23,9 +25,9 @@ TagManager:
   - Wall
   - Usable
   - Weapon
-  - 
-  - 
-  - 
+  - NotTackableNPC
+  - Enemy
+  - EnemyWeapon
   - 
   - 
   - 

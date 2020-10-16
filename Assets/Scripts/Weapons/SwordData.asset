@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6214718caa18c134b83c0ed3f826bd50, type: 3}
   m_Name: SwordData
   m_EditorClassIdentifier: 
-  Damage: 50
+  Damage: 30
   WasteOfStamina: 15

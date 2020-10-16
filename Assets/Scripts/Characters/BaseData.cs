@@ -3,23 +3,52 @@
 
 namespace Shipov_FP_Adventure
 {
-    public class BaseData : MonoBehaviour, IGetDamageable
+    public sealed class BaseData : MonoBehaviour, IGetDamageable
     {
         public CharacterData CharacterData;
         public ChangeUIValue HealthValue;
         public ChangeUIValue StaminaValue;
+        public MusicChanger _musicChanger;
+        public float _musicCalmTime;
+        public float _currentMusicCalmTime;
         public bool IsStaminaChange;
+        public bool IsBattle;
+        public GameObject HealingCphere;
 
         private void Start()
         {
+            HealingCphere.SetActive(false);
+            Cursor.visible = false;
             CharacterData.Health = CharacterData.MaxHealth;
             CharacterData.Stamina = CharacterData.MaxStamina;
+        }
+
+        private void Update()
+        {
+            CountNotWoundedTime();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Village"))
+            {
+                _musicChanger.VillageMusic();
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Village"))
+            {
+                _musicChanger.CalmMusic();
+            }
         }
 
         public void GetDamage(int damage)
         {
             CharacterData.Health -= damage;
             HealthValue.ChangeValueUI(damage);
+            Battle();
 
             if (CharacterData.Health <= 0)
             {
@@ -30,6 +59,8 @@ namespace Shipov_FP_Adventure
         public void RestoreMaxHealth()
         {
             CharacterData.Health = CharacterData.MaxHealth;
+            HealthValue.ChangeValueUI();
+            HealingCphere.SetActive(false);
         }
 
         public void RestoreMaxStamina()
@@ -38,7 +69,7 @@ namespace Shipov_FP_Adventure
             IsStaminaChange = false;
         }
 
-        public void ReduceStamina(int number)
+        public void ReduceStamina(float number)
         {
             CharacterData.Stamina -= number;
             StaminaValue.ChangeValueUI(number);
@@ -47,8 +78,8 @@ namespace Shipov_FP_Adventure
 
         public void RestoreStamina()
         {
-            CharacterData.Stamina += 1;
-            StaminaValue.ChangeValueUI(-1);
+            CharacterData.Stamina += 2;
+            StaminaValue.ChangeValueUI(-2);
         }
 
         public bool IsMaxStamina()
@@ -59,6 +90,41 @@ namespace Shipov_FP_Adventure
         public float GetStamina()
         {
             return CharacterData.Stamina;
+        }
+
+        public float GetHealth()
+        {
+            return CharacterData.Health;
+        }
+
+        private void Battle()
+        {
+            if (!IsBattle)
+            {
+                _musicChanger.BattleMusic();
+                IsBattle = true;
+            }
+            else
+            {
+                _currentMusicCalmTime = 0;
+            }
+        }
+
+        private void CountNotWoundedTime()
+        {
+            if (IsBattle)
+            {
+                if (_currentMusicCalmTime < _musicCalmTime)
+                {
+                    _currentMusicCalmTime += Time.deltaTime;
+                }
+                else
+                {
+                    _currentMusicCalmTime = 0.0f;
+                    _musicChanger.CalmMusic();
+                    IsBattle = false;
+                }
+            }
         }
     }
 }

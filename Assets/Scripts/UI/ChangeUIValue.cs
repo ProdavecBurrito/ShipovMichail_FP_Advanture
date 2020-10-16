@@ -12,6 +12,11 @@ namespace Shipov_FP_Adventure
         {
             _image.fillAmount = _image.fillAmount - (value / 100);
         }
+
+        public void ChangeValueUI()
+        {
+            _image.fillAmount = 1f;
+        }
     }
 }
 

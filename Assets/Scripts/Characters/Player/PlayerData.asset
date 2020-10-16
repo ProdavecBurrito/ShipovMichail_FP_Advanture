@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   Name: Player
-  Stamina: 100
+  Stamina: 87
   Health: 100
   MaxHealth: 100
   MaxStamina: 100

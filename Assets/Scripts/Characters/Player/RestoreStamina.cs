@@ -7,8 +7,8 @@ namespace Shipov_FP_Adventure
     {
         [SerializeField] private float _restoreTime;
         [SerializeField] private float _currentRestoreTime;
-        [SerializeField] private bool _isNeedToRestore;
         private BaseData _baseData;
+        public bool IsRestore;
 
         private void Start()
         {
@@ -24,9 +24,10 @@ namespace Shipov_FP_Adventure
         public void StartRestoreTimer()
         {
             _currentRestoreTime = 0;
+            IsRestore = true;
         }
 
-        public void StartRestoreStamina()
+        private void StartRestoreStamina()
         {
             if (_currentRestoreTime < _restoreTime)
             {
@@ -41,6 +42,7 @@ namespace Shipov_FP_Adventure
                 else
                 {
                     _baseData.RestoreMaxStamina();
+                    IsRestore = false;
                 }
             }
         }

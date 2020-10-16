@@ -7,11 +7,12 @@ namespace Shipov_FP_Adventure
     public class Dialogue : MonoBehaviour
     {
         public CharacterData _character;
-
+        public PeacefulTalkingNpc _peacefulTalkingNpc;
         public Text CharacterNameText;
         public Text UICurrentSentence;
         public RectTransform TextPanel;
         public RectTransform UsePanel;
+        public EnemyKnight _enemy;
 
         private MouseLook _mouseLook;
         private PlayerMovement _playerMovement;
@@ -36,15 +37,21 @@ namespace Shipov_FP_Adventure
 
         private void Start()
         {
+            _peacefulTalkingNpc = GetComponent<PeacefulTalkingNpc>();
             _playerAnimator = FindObjectOfType<PlayerAnimation>();
             _playerMovement = FindObjectOfType<PlayerMovement>();
             _mouseLook = FindObjectOfType<MouseLook>();
             _isAlreadySpoke = false;
             _name = _character.Name;
+            if (_peacefulTalkingNpc._isAggressive)
+            {
+                _enemy = GetComponent<EnemyKnight>();
+            }
         }
 
         public void StartDialogue()
         {
+            Cursor.visible = true;
             _mouseLook.UnlockCursor();
             _mouseLook.enabled = false;
             _playerAnimator.enabled = false;
@@ -86,6 +93,13 @@ namespace Shipov_FP_Adventure
                         _isAlreadySpoke = true;
                         TextPanel.gameObject.SetActive(false);
                         _isTalking = false;
+                        Cursor.visible = false;
+                        if (_peacefulTalkingNpc._isAggressive)
+                        {
+                            _peacefulTalkingNpc.enabled = false;
+                            _enemy.enabled = true;
+                            enabled = false;
+                        }
                     }
                     else
                     {
@@ -95,6 +109,7 @@ namespace Shipov_FP_Adventure
                 }
                 else
                 {
+                    Cursor.visible = false;
                     _playerMovement.enabled = true;
                     _playerAnimator.enabled = true;
                     _mouseLook.LockCursor();

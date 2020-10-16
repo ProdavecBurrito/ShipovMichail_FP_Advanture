@@ -3,7 +3,7 @@
 
 namespace Shipov_FP_Adventure
 {
-    public class DyingNpc : MonoBehaviour
+    public sealed class DyingNpc : MonoBehaviour
     {
         #region Fields
 
@@ -40,7 +40,12 @@ namespace Shipov_FP_Adventure
         {
             if (_dialogue.IsAlreadySpoke)
             {
-                Die();
+                if (!_isDying)
+                {
+                    Debug.Log("Die");
+                    _animator.SetTrigger("Die");
+                    _isDying = true;
+                }
             }
         }
 

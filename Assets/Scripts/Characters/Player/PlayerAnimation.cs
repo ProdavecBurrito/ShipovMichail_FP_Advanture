@@ -14,6 +14,7 @@ namespace Shipov_FP_Adventure
         private PlayerMovement _playerMovement;
         private InputManager _inputManager;
         private PlayerWeaponManager _playerManager;
+        private BaseData _characterData;
         private bool _isAttack;
         private bool _isSecondAttack;
         private bool _isThirdAttack;
@@ -29,6 +30,7 @@ namespace Shipov_FP_Adventure
 
         private void Start()
         {
+            _characterData = GetComponent<BaseData>();
             _playerManager = GetComponent<PlayerWeaponManager>();
             _isAttack = false;
             _animator = GetComponent<Animator>();
@@ -38,11 +40,12 @@ namespace Shipov_FP_Adventure
 
         private void Update()
         {
+            CheckThatAttack();
             CheckJumpAnimation();
             SetMovementAnimation();
             CheckThatStrafe();
             CheckThatDrawWeapon();
-            CheckThatAttack();
+            CheckThatHeal();
         }
 
         #endregion
@@ -52,7 +55,7 @@ namespace Shipov_FP_Adventure
 
         private void SetMovementAnimation()
         {
-            if (_inputManager.PressedRunButton())
+            if (_inputManager.PressedRunButton() && _playerMovement.IsRun == true)
             {
                 _animator.SetBool("IsRun", true);
             }
@@ -63,6 +66,7 @@ namespace Shipov_FP_Adventure
 
             _animator.SetFloat("Direction", _inputManager.Movement.x);
             _animator.SetFloat("Speed", _inputManager.Movement.z);
+
             if (_animator.GetFloat("Speed") != 0)
             {
                 _animator.SetBool("IsWalk", true);
@@ -83,6 +87,15 @@ namespace Shipov_FP_Adventure
             else
             {
                 _animator.SetBool("IsJump", false);
+            }
+        }
+
+        private void CheckThatHeal()
+        {
+            if (_inputManager.PressedHeal())
+            {
+                _animator.SetTrigger("Drink");
+                _characterData.HealingCphere.SetActive(true);
             }
         }
 
@@ -112,34 +125,53 @@ namespace Shipov_FP_Adventure
             }
         }
 
+        public void EndAttack()
+        {
+            _animator.SetBool("Attack", false);
+        }
+
+        public void EndSecondAttack()
+        {
+            _animator.SetBool("SecondAttack", false);
+        }
+
+        public void EndThirdAttack()
+        {
+            _animator.SetBool("ThirdAttack", false);
+        }
+
+        private void CancelAnim()
+        {
+            _animator.SetBool("Attack", false);
+            _animator.SetBool("SecondAttack", false);
+            _animator.SetBool("ThirdAttack", false);
+        }
+
         private void CheckThatAttack()
         {
-            if (_playerManager.IsArmed)
+            if (_playerManager.IsArmed && _inputManager.PressedAttack() && _characterData.GetStamina() > 0)
             {
-                if (_inputManager.PressedAttack() && !_isAttack && !_isSecondAttack)
+                if (!_animator.GetBool("Attack") && !_animator.GetBool("SecondAttack") && !_animator.GetBool("ThirdAttack"))
                 {
-                    _animator.SetTrigger("Attack");
-                    _isAttack = true;
+                    _animator.SetBool("Attack", true);
                 }
-                else if (_inputManager.PressedAttack() && _isAttack && !_isSecondAttack)
+                else if (_animator.GetBool("Attack") && !_animator.GetBool("SecondAttack") && !_animator.GetBool("ThirdAttack"))
                 {
-                    _animator.SetTrigger("SecondAttack");
-                    _isAttack = false;
-                    _isSecondAttack = true;
+                    _animator.SetBool("SecondAttack", true);
                 }
-                else if (_inputManager.PressedAttack() && !_isAttack && _isSecondAttack)
+                else if (!_animator.GetBool("Attack") && _animator.GetBool("SecondAttack") && !_animator.GetBool("ThirdAttack"))
                 {
-                    _animator.SetTrigger("ThirdAttack");
-                    _isThirdAttack = true;
-                    _isSecondAttack = false;
+                    _animator.SetBool("ThirdAttack", true);
                 }
-                else if (_inputManager.PressedAttack() && !_isAttack && !_isSecondAttack && _isThirdAttack)
+                else if (!_animator.GetBool("Attack") && !_animator.GetBool("SecondAttack") && _animator.GetBool("ThirdAttack"))
                 {
-                    _isThirdAttack = false;
-                    _animator.SetTrigger("Attack");
-                    _isAttack = true;
+                    _animator.SetBool("Attack", true);
                 }
-                
+                else if (_animator.GetBool("SecondAttack") && _animator.GetBool("ThirdAttack") && _animator.GetBool("Attack"))
+                {
+                    CancelAnim();
+                }
+
             }
         }
 

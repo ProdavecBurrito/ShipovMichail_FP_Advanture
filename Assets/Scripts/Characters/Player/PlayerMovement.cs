@@ -8,8 +8,10 @@ namespace Shipov_FP_Adventure
         #region Constants
 
         private const int RUN_MULTIPLIER = 2;
+        private const float RUN_STAMINA_REDUCE = 0.5f;
 
         #endregion
+
 
         #region Fields
 
@@ -23,6 +25,8 @@ namespace Shipov_FP_Adventure
         private GroundChecker _groundChecker;
         private InputManager _inputManager;
         private Rigidbody _rigidbody;
+        private BaseData _playerData;
+        private RestoreStamina _restoreStamina;
         private Vector3 _localMovement;
 
         #endregion
@@ -40,11 +44,17 @@ namespace Shipov_FP_Adventure
 
             _groundChecker = GetComponentInChildren<GroundChecker>();
             _inputManager = GetComponent<InputManager>();
+            _playerData = GetComponent<BaseData>();
+            _restoreStamina = GetComponent<RestoreStamina>();
         }
 
         private void FixedUpdate()
         {
             MovePlayer();
+        }
+
+        private void Update()
+        {
             CheckJump();
         }
 
@@ -59,20 +69,30 @@ namespace Shipov_FP_Adventure
             {
                 _inputManager.Movement.Normalize();
 
-                if (_inputManager.PressedRunButton())
+                if (_inputManager.PressedRunButton() && _playerData.GetStamina() > 0)
                 {
                     IsRun = true;
                     _localMovement = (transform.right * _inputManager.Movement.x + transform.forward * _inputManager.Movement.z) * _speed * RUN_MULTIPLIER;
+                    _playerData.ReduceStamina(RUN_STAMINA_REDUCE);
+                    _restoreStamina.StartRestoreTimer();
+
                 }
+
                 else
                 {
                     IsRun = false;
                     _localMovement = (transform.right * _inputManager.Movement.x + transform.forward * _inputManager.Movement.z) * _speed;
                 }
+
                 transform.position += _localMovement * Time.deltaTime;
+
                 if (_inputManager.Movement.x != 0 && _inputManager.Movement.z == 0)
                 {
                     IsStrafe = true;
+                }
+                else
+                {
+                    IsStrafe = false;
                 }
             }
             else

@@ -44,13 +44,10 @@ namespace Shipov_FP_Adventure
                     }
                     break;
                 }
-                else
+                else if (i == _menus.Length -1 && _isPaused)
                 {
-                    if (_isPaused)
-                    {
-                        _isPaused = false;
-                        PauseOff();
-                    }
+                    _isPaused = false;
+                    PauseOff();
                 }
             }
         }
@@ -58,17 +55,16 @@ namespace Shipov_FP_Adventure
         public void PauseOn()
         {
             Cursor.visible = true;
+            Debug.Log("Kek");
             LockScripts();
-            _mouseLook.enabled = true;
-
             Time.timeScale = 0;
         }
 
         public void PauseOff()
         {
             Cursor.visible = false;
+            Debug.Log("Дуд");
             UnlockScripts();
-            _mouseLook.enabled = true;
             Time.timeScale = 1;
         }
 

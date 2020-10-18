@@ -9,11 +9,11 @@ namespace Shipov_FP_Adventure
         public ChangeUIValue HealthValue;
         public ChangeUIValue StaminaValue;
         public MusicChanger _musicChanger;
+        public GameObject HealingCphere;
         public float _musicCalmTime;
         public float _currentMusicCalmTime;
         public bool IsStaminaChange;
         public bool IsBattle;
-        public GameObject HealingCphere;
 
         private void Start()
         {
@@ -52,7 +52,7 @@ namespace Shipov_FP_Adventure
 
             if (CharacterData.Health <= 0)
             {
-                Destroy(gameObject);
+                
             }
         }
 

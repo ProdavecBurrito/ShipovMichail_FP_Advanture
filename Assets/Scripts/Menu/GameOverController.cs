@@ -1,57 +1,57 @@
 ﻿using UnityEngine;
 
-
-public class GameOverController : MonoBehaviour
+namespace Shipov_FP_Adventure
 {
-    //#region Constants
+    public class GameOverController : MonoBehaviour
+    {
+        #region Fields
 
-    //private const float EXIT_TIME = 2.0f;
+        [SerializeField] private GameObject _exitPanel;
+        private InputManager _inputManager;
+        private BaseData _player;
+        private PlayerAnimation _playerAnimation;
+        private PlayerMovement _playerMovement;
+        private MouseLook _mouseLook;
 
-    //#endregion
-
-
-    //#region Fields
-
-    ////private PlayerMain _player;
-    //private GameObject _mainChar;
-    //private float _currentTime;
-
-    //#endregion
+        #endregion
 
 
-    //#region UnityMethods
+        #region UnityMethods
 
-    //private void Start()
-    //{
-    //    _mainChar = GameObject.FindGameObjectWithTag("Player");
-    //    //_player = FindObjectOfType<PlayerMain>();
-    //}
+        private void Start()
+        {
+            _inputManager = FindObjectOfType<InputManager>();
+            _player = FindObjectOfType<BaseData>();
+            _playerAnimation = FindObjectOfType<PlayerAnimation>();
+            _playerMovement = FindObjectOfType<PlayerMovement>();
+            _mouseLook = FindObjectOfType<MouseLook>();
+        }
 
-    //private void FixedUpdate()
-    //{
-    //    CheckThatGameOverProcessIsOn();
-    //}
+        private void FixedUpdate()
+        {
+            CheckThatGameOverProcessIsOn();
+        }
 
-    //#endregion
+        #endregion
 
 
-    //#region Methods
+        #region Methods
 
-    ////private void CheckThatGameOverProcessIsOn()
-    ////{
-    ////    if (_player._isGameOver)
-    ////    {
-    ////        _mainChar.SetActive(false);
-    ////        if (_currentTime < EXIT_TIME)
-    ////        {
-    ////            _currentTime += Time.deltaTime;
-    ////            if (_currentTime >= EXIT_TIME)
-    ////            {
-    ////                Application.Quit();
-    ////            }
-    ////        }
-    ////    }
-    ////}
+        private void CheckThatGameOverProcessIsOn()
+        {
+            if (_player.GetHealth() < 1)
+            {
+                _playerAnimation.enabled = false;
+                _playerMovement.enabled = false;
+                _mouseLook.enabled = false;
+                _player.enabled = false;
+                _inputManager.enabled = false;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                _exitPanel.SetActive(true);
+            }
+        }
 
-    //#endregion
+        #endregion
+    }
 }

@@ -7,6 +7,7 @@ namespace Shipov_FP_Adventure
     {
         [SerializeField] Camera _mainCam;
         [SerializeField] private LayerMask _layerMask;
+        [SerializeField] private Takable _thing;
 
         private StartDialogue _startDialogue;
         private InputManager _inputManager;
@@ -27,25 +28,39 @@ namespace Shipov_FP_Adventure
 
         private void FindUsableTargets()
         {
-            if (Physics.Raycast(_mainCam.transform.position, _mainCam.transform.forward, out _hit, 2f, _layerMask))
+            if (Physics.Raycast(_mainCam.transform.position, _mainCam.transform.forward, out _hit, 2.5f, _layerMask))
             {
-                if (_dialogue == null)
+                if (!_hit.collider.gameObject.CompareTag("Usable"))
                 {
-                    _dialogue = _hit.collider.gameObject.GetComponent<Dialogue>();
-                }
-
-                if (_dialogue != null && !_startDialogue.IsUsePanelActive && !_dialogue.IsTalking)
-                {
-                    _startDialogue.ShowUseButton();
-                    if (_inputManager.PressedUse())
+                    if (_dialogue == null)
                     {
+                        _dialogue = _hit.collider.gameObject.GetComponent<Dialogue>();
+                    }
+
+                    if (_dialogue != null && !_startDialogue.IsUsePanelActive && !_dialogue.IsTalking)
+                    {
+                        _startDialogue.ShowUseButton();
+                    }
+
+                    if (_dialogue != null &&_inputManager.PressedUse() && !_dialogue.IsTalking)
+                    {
+
                         _dialogue.StartDialogue();
                     }
-                }
 
-                if (_dialogue!= null && _dialogue.IsTalking)
+                    if (_dialogue != null && _dialogue.IsTalking)
+                    {
+                        _startDialogue.HideUseButton();
+                    }
+                }
+                else if (_hit.collider.gameObject.CompareTag("Usable"))
                 {
-                    _startDialogue.HideUseButton();
+                    _startDialogue.ShowUseButton();
+                    if (_inputManager.PressedUse() && _thing != null)
+                    {
+                        _thing.Take();
+                        _startDialogue.HideUseButton();
+                    }
                 }
             }
             else

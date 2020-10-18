@@ -94,7 +94,7 @@ namespace Shipov_FP_Adventure
         {
             if (_inputManager.PressedHeal())
             {
-                _animator.SetTrigger("Drink");
+                _animator.SetBool("Heal", true);
                 _characterData.HealingCphere.SetActive(true);
             }
         }
@@ -173,6 +173,11 @@ namespace Shipov_FP_Adventure
                 }
 
             }
+        }
+
+        private void СancelHeal()
+        {
+            _animator.SetBool("Heal", false);
         }
 
 

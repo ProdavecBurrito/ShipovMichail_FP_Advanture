@@ -39,11 +39,14 @@ namespace Shipov_FP_Adventure
 
         protected override void Update()
         {
-            if (!die)
+            if (!_isPassive)
             {
-                base.Update();
-                CheckVisibleTargets();
-                CheckPatrol();
+                if (!die)
+                {
+                    base.Update();
+                    CheckVisibleTargets();
+                    CheckPatrol();
+                }
             }
         }
 

@@ -6,6 +6,7 @@ namespace Shipov_FP_Adventure
     {
         [SerializeField] private WeaponData _weaponData;
         [SerializeField] bool _isHit;
+        [SerializeField] private ParticleSystem _blood;
 
         private void Start()
         {
@@ -19,6 +20,7 @@ namespace Shipov_FP_Adventure
                 if (other.CompareTag("Enemy"))
                 {
                     other.gameObject.GetComponent<IGetDamageable>().GetDamage(_weaponData.Damage);
+                    _blood.Play();
                     _isHit = true;
                 }
             }

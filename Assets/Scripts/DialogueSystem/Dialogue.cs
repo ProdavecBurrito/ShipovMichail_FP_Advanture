@@ -97,7 +97,7 @@ namespace Shipov_FP_Adventure
                         if (_peacefulTalkingNpc._isAggressive)
                         {
                             _peacefulTalkingNpc.enabled = false;
-                            _enemy.enabled = true;
+                            _enemy._isPassive = false;
                             enabled = false;
                         }
                     }

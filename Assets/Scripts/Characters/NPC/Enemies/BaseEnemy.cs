@@ -30,7 +30,9 @@ namespace Shipov_FP_Adventure
         [SerializeField] protected float _attackSpeed;
         [SerializeField] protected bool _isPatroling;
         [SerializeField] protected bool _isAggressive;
+        [SerializeField] public bool _isPassive;
 
+        public float MaxHealth;
         protected Collider[] _targetsInViewRadius;
         protected NavMeshAgent _agentNavMesh;
         protected Transform _playerTransform;
@@ -68,6 +70,7 @@ namespace Shipov_FP_Adventure
 
         protected virtual void Start()
         {
+            MaxHealth = _characterData.MaxHealth;
             _animator = GetComponent<Animator>();
             _health = _characterData.Health;
             _healthImage = GetComponentInChildren<Image>();
@@ -77,9 +80,12 @@ namespace Shipov_FP_Adventure
 
         protected virtual void Update()
         {
-            if (!die)
+            if (!_isPassive)
             {
-                CheckinMinDistanceToPlayer();
+                if (!die)
+                {
+                    CheckinMinDistanceToPlayer();
+                }
             }
         }
 
@@ -186,22 +192,25 @@ namespace Shipov_FP_Adventure
 
         public void GetDamage(int damage)
         {
-            if (!die)
-            {
-                ChangeHealth(damage);
-                _healthValue.ChangeValueUI(damage);
+                if (!die)
+                {
+                    ChangeHealth(damage);
+                    _healthValue.ChangeValueUI(damage);
 
-                if (_health > 0)
-                {
-                    PursueTarget(_playerTransform);
-                }
-                else
-                {
-                    Die();
+                    if (_isPassive)
+                    _isPassive = false;
+
+                    if (_health > 0)
+                    {
+                        PursueTarget(_playerTransform);
+                    }
+                    else
+                    {
+                        Die();
+                    }
                 }
             }
         }
 
         #endregion
-    }
 }

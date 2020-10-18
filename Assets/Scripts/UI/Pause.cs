@@ -55,7 +55,6 @@ namespace Shipov_FP_Adventure
         public void PauseOn()
         {
             Cursor.visible = true;
-            Debug.Log("Kek");
             LockScripts();
             Time.timeScale = 0;
         }
@@ -63,7 +62,6 @@ namespace Shipov_FP_Adventure
         public void PauseOff()
         {
             Cursor.visible = false;
-            Debug.Log("Дуд");
             UnlockScripts();
             Time.timeScale = 1;
         }

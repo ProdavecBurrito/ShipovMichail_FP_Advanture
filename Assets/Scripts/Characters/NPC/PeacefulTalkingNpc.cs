@@ -10,6 +10,7 @@ namespace Shipov_FP_Adventure
         [SerializeField] private float _distanceToPlayer;
         [SerializeField] private float _headFolowDistance;
         [SerializeField] private Transform _playerHead;
+        [SerializeField] public bool _isAggressive;
 
         private CheckRangeToTarget _checkRange;
         private Dialogue _dialogue;
@@ -56,20 +57,23 @@ namespace Shipov_FP_Adventure
 
         private void CheckThatNeedCallTarget()
         {
-            if (!_dialogue.IsTalking && !_dialogue.IsAlreadySpoke)
+            if (!_isAggressive)
             {
-                if (_checkRange.CheckinMinDistanceToObject(_player, _distanceToPlayer))
+                if (!_dialogue.IsTalking && !_dialogue.IsAlreadySpoke)
                 {
-                    _animator.SetBool("IsSeeTarget", true);
+                    if (_checkRange.CheckinMinDistanceToObject(_player, _distanceToPlayer))
+                    {
+                        _animator.SetBool("IsSeeTarget", true);
+                    }
+                    else
+                    {
+                        _animator.SetBool("IsSeeTarget", false);
+                    }
                 }
                 else
                 {
                     _animator.SetBool("IsSeeTarget", false);
                 }
-            }
-            else
-            {
-                _animator.SetBool("IsSeeTarget", false);
             }
         }
 

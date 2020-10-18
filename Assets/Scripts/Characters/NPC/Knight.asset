@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6731a875c18a8034b83f65b73b532a76, type: 3}
   m_Name: Knight
   m_EditorClassIdentifier: 
-  Name: Lonely Knight
+  Name: "\u0420\u044B\u0446\u0430\u0440\u044C"
   Stamina: 100
   Health: 100
   MaxHealth: 100

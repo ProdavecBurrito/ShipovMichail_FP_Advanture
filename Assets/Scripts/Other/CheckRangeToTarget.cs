@@ -13,5 +13,14 @@ namespace Shipov_FP_Adventure
             }
             return false;
         }
+
+        public bool CheckinOffDistanceToObject(Transform target, float distance)
+        {
+            if ((transform.position - target.position).sqrMagnitude > distance * distance)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

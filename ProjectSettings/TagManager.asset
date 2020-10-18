@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Usable
+  - Enemy
+  - PlayerStaminaImage
+  - PlayerHealthImage
+  - WayPoint
+  - Village
   layers:
   - Default
   - TransparentFX
@@ -18,11 +23,11 @@ TagManager:
   - NPC
   - Ground
   - Wall
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Usable
+  - Weapon
+  - NotTackableNPC
+  - Enemy
+  - EnemyWeapon
   - 
   - 
   - 

@@ -7,7 +7,7 @@ namespace Shipov_FP_Adventure
     {
         #region Constants
 
-        private const float CHECK_RADIUS = 0.2f;
+        private const float CHECK_RADIUS = 0.5f;
 
         #endregion
 

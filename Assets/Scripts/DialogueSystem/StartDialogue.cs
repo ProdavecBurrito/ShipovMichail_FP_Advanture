@@ -7,9 +7,7 @@ namespace Shipov_FP_Adventure
     {
         [SerializeField] private RectTransform UsePanel;
 
-        private Dialogue _dialogue;
-
-        private bool _isUsePanelActive;
+        [SerializeField] private bool _isUsePanelActive;
 
         public bool IsUsePanelActive => _isUsePanelActive;
 

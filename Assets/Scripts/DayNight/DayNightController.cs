@@ -63,10 +63,14 @@ namespace Shipov_FP_Adventure
 
             if (_skyBoxCurve.Evaluate(_currentTime) > HALF_DAY)
             {
+                _lightDaySource.enabled = true;
+                _lightNightSource.enabled = false;
                 RenderSettings.sun = _lightDaySource;
             }
             else
             {
+                _lightDaySource.enabled = false;
+                _lightNightSource.enabled = true;
                 RenderSettings.sun = _lightNightSource;
             }
 
